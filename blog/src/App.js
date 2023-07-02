@@ -12,6 +12,8 @@ function App() {
   let [따봉, 따봉변경] = useState([0,0,0]);
   let [modal,setModal] =useState(false);
 
+  let [indexNum,setIndexNum] =useState(0);
+
   //map 안에는 모두 콜백함수를 씀
   //앞의 array 자료 갯수만큼 함수안의 코드를 실행해줌
   //함수의 파라미터는 array안에 있던 자료임
@@ -60,7 +62,8 @@ function App() {
         글제목.map(function(a,i){
           return(
             <div className="list">
-              <h4 onClick={()=>{setModal(!modal)}}>{a}
+              <h4 onClick={()=>{setModal(!modal);
+              setIndexNum(i)}}>{a}
                 <span onClick={()=>{
                   let copy=[...따봉]
                   copy[i]=따봉[i]+1
@@ -83,15 +86,17 @@ function App() {
         })
       } */}
 
-      {
+      {/* {
         //리액트는 array 안에 html 담아놔도 잘 보여줌
         [<div>안녕</div>,<div>안녕</div>,<div>안녕</div>]
-      }
+      } */}
 
       {
         //if대신 삼항연산자 사용
-        modal==true?<Modal/>:null
+        modal==true?<Modal color={'skyblue'} indexNum={indexNum} 글제목={글제목} 하이함수={Hi} 글제목변경={글제목변경}/>:null
       }
+
+      {/* {<Hi/>} */}
       
       {/* <Modal></Modal>
       <Modal/> */}
@@ -112,12 +117,25 @@ let Modal2 = () => {
 
 //컴포넌트라고 불림
 //return 안은 항상 div 컨테이너 하나에 묶여있어야함. 2개 이상 태그쓰면 에러
-function Modal(){
+function Modal(props){
   return (
-    <div className="modal">
-      <h4>제목</h4>
+    <div className="modal" style={{background:props.color}}>
+      <h4>{props.글제목[props.indexNum]}</h4>
       <p>날짜</p>
       <p>상세내용</p>
+      <button onClick={()=>{
+        let copy=[...props.글제목]
+        copy[props.indexNum]='여자 코트 추천'
+        props.글제목변경(copy)
+      }}>글수정</button>
+    </div>
+  )
+}
+
+function Hi(){
+  return(
+    <div>
+      <h4>hi</h4>
     </div>
   )
 }
