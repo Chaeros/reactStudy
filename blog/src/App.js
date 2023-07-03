@@ -4,6 +4,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
+import React from 'react';
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
   let [modal,setModal] =useState(false);
 
   let [indexNum,setIndexNum] =useState(0);
+  let [inputVal,setInputVal] =useState('');
 
   //map 안에는 모두 콜백함수를 씀
   //앞의 array 자료 갯수만큼 함수안의 코드를 실행해줌
@@ -64,12 +66,18 @@ function App() {
             <div className="list">
               <h4 onClick={()=>{setModal(!modal);
               setIndexNum(i)}}>{a}
-                <span onClick={()=>{
-                  let copy=[...따봉]
-                  copy[i]=따봉[i]+1
+                <span onClick={(e)=>{
+                  let copy=[...따봉];
+                  copy[i]=따봉[i]+1;
+                  e.stopPropagation();
                   따봉변경(copy)}}>👍</span>{따봉[i]}
               </h4>
               <p>2월 17일 발행</p>
+              <button onClick={()=>{
+                  let copy=[...글제목];
+                  copy.splice(i,1)
+                  글제목변경(copy)
+              }}>글삭제</button>
             </div>
           )
         })
@@ -91,6 +99,24 @@ function App() {
         [<div>안녕</div>,<div>안녕</div>,<div>안녕</div>]
       } */}
 
+      <input onChange={(e)=>{setInputVal(e.target.value);}}/>
+      <button onClick={()=>{
+        let copy=[...글제목];
+        copy.unshift(inputVal)
+        글제목변경(copy);
+        let addLike = [...따봉];
+        addLike.unshift(0)
+        따봉변경(addLike);
+      }}>만들기</button>
+
+      {/* <input onChange={(e)=>{setInputVal(e.target.value);}}/>
+      <button onClick={()=>{
+        let copy=[inputVal,...글제목];
+        글제목변경(copy);
+        let addLike = [0,...따봉];
+        따봉변경(addLike);
+      }}>만들기</button> */}
+
       {
         //if대신 삼항연산자 사용
         modal==true?<Modal color={'skyblue'} indexNum={indexNum} 글제목={글제목} 하이함수={Hi} 글제목변경={글제목변경}/>:null
@@ -100,6 +126,11 @@ function App() {
       
       {/* <Modal></Modal>
       <Modal/> */}
+
+      {/* <Modal3></Modal3>
+      <Modal3></Modal3>
+      <Modal3></Modal3>
+      <Modal3></Modal3> */}
 
     </div>
   );
@@ -118,6 +149,7 @@ let Modal2 = () => {
 //컴포넌트라고 불림
 //return 안은 항상 div 컨테이너 하나에 묶여있어야함. 2개 이상 태그쓰면 에러
 function Modal(props){
+  let [tempDelNum,setTempDelNum]=useState()
   return (
     <div className="modal" style={{background:props.color}}>
       <h4>{props.글제목[props.indexNum]}</h4>
@@ -139,5 +171,25 @@ function Hi(){
     </div>
   )
 }
+
+// class Modal3 extends React.Component{
+//   constructor(props){
+//     super(props);
+//     //class에서 state 작성법
+//     this.state={
+//       name : 'kim',
+//       age : 20
+//     }
+//   }
+//   render(){
+//     return(
+//       <div>안녕{this.state}
+//         <button onClick={()=>{
+//           this.setState({age:21})
+//         }}>버튼</button>
+//       </div>
+//     )
+//   }
+// }
 
 export default App;
