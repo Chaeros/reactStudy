@@ -1,3 +1,13 @@
+/* 애니메이션 동작 전, 투명도 변하게*/
+.start{
+  opacity:0;
+}
+
+.end{
+  opacity:1;
+  transition:opacity 0.5s;
+}
+
 .App {
   text-align: center;
 }

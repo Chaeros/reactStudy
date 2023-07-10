@@ -1,6 +1,6 @@
 let data=[
     {
-        id : 2,
+        id : 0,
         title : "iPhone 14 Pro",
         content : "Born in States",
         price : 12000000
@@ -14,7 +14,7 @@ let data=[
     },
 
     {
-        id : 0,
+        id : 2,
         title : "iPad",
         content : "Born in the States",
         price : 13000000
